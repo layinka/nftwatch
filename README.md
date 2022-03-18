@@ -1,19 +1,19 @@
-![NFT Market Cap banner](public/nmc_banner.jpg)
 
-# NFT Market Cap Demo App
-Just press `Run` to see this demo app in action with the following features:
+
+# NFT Watch
+## Features:
 
 * A global summary table of NFT collections per selected blockchain, sorted by market cap
 * Ability to select a row in the global summary table to get a collection detail view and a preview of the first 5 NFTs in the collection 
 * Ability to select one of the NFTs and see its metadata
+* Charts showing collection metadata
 
 
-## Fork
+## Run
 Feel free to fork this repl and use as you like. In order to run the demo app, you will need to:
-
-1. Obtain your own Covalent API key [here](https://www.covalenthq.com/platform)
-
-2. In the sidebar, the icon with a padlock will take you to a pane where you can set environment variables. Create an environment variable **key** called: `REACT_APP_COVALENT_API` and set the value to be your Covalent API key from step 1. 
+1. Copy and renme the .env.sample file to .env
+2. Obtain your own Covalent API key [here](https://www.covalenthq.com/platform) and update  `REACT_APP_COVALENT_API`
+ 
 
 ## Purpose
 The market cap of any crypto asset is an important metric for knowing how well that asset is performing. For getting the NFT market cap, there are various tools like CoinMarketCap or CoinGecko but none of them provides an endpoint for it.
@@ -92,6 +92,3 @@ This endpoint allows one to drill down into the details of a collection and the 
 ```
 Data for the detail view is at a day granularity. 
 
-## Feedback and Support
-
-If you have any questions, comments and feedback regarding this demo app, please message us in our Discord: https://covalenthq.com/discord
