@@ -10,9 +10,22 @@ import './style.css'
 import { CONFIG } from '../../config'
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { Chart } from 'react-chartjs-2'
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 ChartJS.register(...registerables);
+
+const getDateOfDaysAgo = (daysAgo)=>{
+  let today = new Date();
+  today.setDate(today.getDate()-daysAgo)
+  
+ return today;// .toISOString().split('T')[0] 
+}
+
+const formatDate = (date) => {
+
+  const months = ['Jan', 'Feb','Mar','Apr','May','Jun', 'Jul','Aug','Sep',,'Oct','Nov', 'Dec']
+  return `${months[date.getMonth()]} ${date.getDate()}`;
+}
 
 export default function CollectionView() {
   let { address, id } = useParams();
@@ -28,6 +41,9 @@ export default function CollectionView() {
 
   const [data, setData] = useState({})
 
+  const [volumeChartData, setVolumeChartData] = useState()
+  const [tokensSoldChartData, setTokensSoldChartData] = useState()
+
    var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -37,20 +53,48 @@ export default function CollectionView() {
   // Request for collection data
   const handleCollection = async() => {
 	  
-	const today = new Date().toISOString().split('T')[0];
-
+	  const today = new Date().toISOString().split('T')[0];
+    
     let sevenDays = new Date();
     sevenDays.setDate(sevenDays.getDate()-7)
 	  
 	 const sevenDaysAgo = sevenDays.toISOString().split('T')[0] 
-
-    console.log('today:', today ,', 7 days: ', sevenDaysAgo);
 	  
     const resp = await axios.get(`https://api.covalenthq.com/v1/${id}/nft_market/collection/${address}/?quote-currency=USD&format=JSON&from=${sevenDaysAgo}&to=${today}&key=${API_KEY}`)
+
+    console.log('Items:',resp.data.data.items); //volume_quote_day
     setData(resp.data.data.items[0])
 
+    const lineData = {
+      labels,
+      datasets: [
+        {
+          label: 'Volume',
+          data: resp.data.data.items.map(n=>n.volume_quote_day),
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        }
+      ],
+    };
+
+    setVolumeChartData(lineData)
+    setTokensSoldChartData({
+      labels,
+      datasets: [
+        {
+          label: 'Tokens Sold',
+          data: resp.data.data.items.map(n=>n.unique_token_ids_sold_count_day),
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        }
+      ],
+    })
     
   }
+
+  
+  let days = [6,5,4,3,2,1,0].map((n)=>formatDate(getDateOfDaysAgo(n)) )
+  const labels = days;// ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   // Request for nft collection (first 5)
   const handleNft = async() => {
@@ -69,36 +113,33 @@ export default function CollectionView() {
 
   }
 
-  const options = {
+  const volChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' ,
       },
       title: {
         display: true,
-        text: 'Chart.js Line Chart',
+        text: 'Volume Chart',
       },
     },
   };
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  const lineData = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [23,45,50,40,30,12,60],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  const tokSalesChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' ,
       },
-      {
-        label: 'Dataset 2',
-        data:  [45,45,21,30,23,12,63],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      title: {
+        display: true,
+        text: 'Token Sold',
       },
-    ],
+    },
   };
+  
   
   return (
     <>
@@ -113,10 +154,7 @@ export default function CollectionView() {
 
           
 
-            <Line
-              options={options}
-              data={lineData}
-            />
+            
 
             <div className="info">
               <div className="image">
@@ -151,6 +189,32 @@ export default function CollectionView() {
                 </table>
               </div>
             </div>
+            <div className="charts" >
+                <div className='floatLeft'>
+                  {volumeChartData ? 
+                    <Line className="chart"
+                      options={volChartOptions}
+                      width={400}
+                      height={300}
+                      data={volumeChartData}
+                    /> : <span></span>
+                  }
+                </div>
+                <div className='floatLeft'>
+                  {tokensSoldChartData ? 
+                  <Bar className="chart"
+                    width={400}
+                    height={300}
+                    options={tokSalesChartOptions}
+                    data={tokensSoldChartData}
+                  /> : <span></span>
+                  }
+                </div>
+                <br className='clearFix'/>
+            </div>
+            
+
+            
           </div>
           <div className="bottom-section">
             <h3>NFT Preview</h3>

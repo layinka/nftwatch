@@ -22,6 +22,16 @@
   height:34%;
 }
 
+@media print, screen and (min-width: 1240px) {
+  .banner{
+    padding:0;
+    
+    height:44%;
+  }
+
+
+}
+
 .select-chain{
   position: absolute;
   top:50px;

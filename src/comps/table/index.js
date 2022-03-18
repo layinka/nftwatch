@@ -14,14 +14,17 @@ const Table = ({data, onClick}) => {
 
   return (
     <table className="table">
-      <tr className="title-row">
-        <th className="collection-name">Collection</th>
-        <th className="align-right">Market Cap</th>
-        <th className="align-right">24hr Volume </th>
-        <th className="align-right">Avg Price</th>
-        <th className="align-right"># Transaction</th>
-        <th className="align-right"># Wallets</th>
-      </tr>
+      <thead>
+        <tr className="title-row">
+          <th className="collection-name">Collection</th>
+          <th className="align-right">Market Cap</th>
+          <th className="align-right">24hr Volume </th>
+          <th className="align-right">Avg Price</th>
+          <th className="align-right"># Transaction</th>
+          <th className="align-right"># Wallets</th>
+        </tr>
+      </thead>
+      <tbody>
       {data && data.map((o,i)=>{
         return (
           <tr key={i} className="data-row" onClick={()=>{onClick(o.collection_address)}}>
@@ -34,6 +37,8 @@ const Table = ({data, onClick}) => {
           </tr>
         )
       })}
+
+      </tbody>
     </table>
   )
 }
