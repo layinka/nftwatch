@@ -57,7 +57,7 @@ export default function LandingPage() {
           :
           <>
             
-            <table className="collection-table">
+            <table className="total-table">
               <thead>
                 <tr className="title-row">
                   <td>Total Market Cap</td>

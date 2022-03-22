@@ -16,6 +16,7 @@ const Table = ({data, onClick}) => {
     <table className="table">
       <thead>
         <tr className="title-row">
+          <th className="position" ></th>
           <th className="collection-name">Collection</th>
           <th className="align-right">Market Cap</th>
           <th className="align-right">24hr Volume </th>
@@ -28,6 +29,7 @@ const Table = ({data, onClick}) => {
       {data && data.map((o,i)=>{
         return (
           <tr key={i} className="data-row" onClick={()=>{onClick(o.collection_address)}}>
+            <td className="position" style={{fontWeight:"400"}}>{i + 1}</td>
             <td className="collection-name" style={{fontWeight:"600"}}>{o.collection_name ? o.collection_name : "null"}</td>
             <td className="align-right">{o.market_cap_quote ? formatter.format(o.market_cap_quote).split('.')[0] : "null"}</td>
             <td className="align-right">{o.volume_quote_24h ? formatter.format(o.volume_quote_24h).split('.')[0] : "null"}</td>

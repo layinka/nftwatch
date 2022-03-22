@@ -10,3 +10,32 @@
   top:50px;
   right:80px;
 }
+
+.total-table{
+  background-color: white;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  color: black;
+}
+
+.total-table .title-row,.total-table .data-row{
+  text-align: center;
+}
+
+.total-table td, tr, th{
+  padding:8px 60px 0px 0px;
+  border:none;
+}
+
+.total-table .title-row{
+  font-size:20px;
+  color:#00D8D5;
+  font-weight: bold;
+}
+
+.total-table .data-row{
+  color:#0f033b;
+  font-size:24px;
+  font-weight:bold;
+}

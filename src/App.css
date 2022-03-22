@@ -19,14 +19,14 @@
   background-position: center;
   background-repeat:no-repeat;
   background-size: cover;
-  height:34%;
+  height:30%;
 }
 
 @media print, screen and (min-width: 1240px) {
   .banner{
     padding:0;
     
-    height:44%;
+    height:38%;
   }
 
 

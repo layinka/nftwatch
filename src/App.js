@@ -9,20 +9,20 @@ const dotenv = require('dotenv')
 function App() {
   return (
     <div className="App">
-    <Router>
-      <Switch>
-        <Route path="/nft/:address/:id">
-          <NFTView />
-        </Route>
-        <Route path="/collection/:address/:id">
-          <CollectionView />
-        </Route>
-        <Route path="/" component={LandingPage} /> 
-      </Switch>
-    </Router>
-    <div className="logo">
-      <img src={Logo}></img>
-    </div>
+      <Router>
+        <Switch>
+          <Route path="/nft/:address/:id">
+            <NFTView />
+          </Route>
+          <Route path="/collection/:address/:id">
+            <CollectionView />
+          </Route>
+          <Route path="/" component={LandingPage} /> 
+        </Switch>
+      </Router>
+      {/* <div className="logo">
+        <img src={Logo}></img>
+      </div> */}
     </div>
   );
 }
